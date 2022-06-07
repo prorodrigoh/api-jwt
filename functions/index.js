@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/public", (req, res) => {
-  res.send("Welcome!"); // anyone can see this
+  res.send({ message: "Welcome!" }); // anyone can see this
 });
 
 app.post("/login", (req, res) => {
@@ -26,30 +26,30 @@ app.post("/login", (req, res) => {
     (user) => user.email === email && user.password === password
   );
   if (!user) {
-    res.status(401).send("Invalid credentials");
+    res.status(401).send({ error: "Invalid credentials" });
     return;
   }
   user.password = undefined; // this removes password from user object that will return no front end
   // now we can create and sign a token with a secret token
   const token = jwt.sign(user, secretkey, { expiresIn: "1h" });
-  res.send(token);
+  res.send({ token });
 });
 
 app.get("/private", (req, res) => {
   // requires a valid token to enter here
   const token = req.headers.authorization || "";
   if (!token) {
-    res.status(401).send("You must be logger in to see this");
+    res.status(401).send({ error: "You must be logger in to see this" });
     return;
   }
   // checks signature, all fields match and if is expired
   jwt.verify(token, secretkey, (err, decoded) => {
     if (err) {
-      res.status(401).send("You must be logged in to see this");
+      res.status(401).send({ error: "You must be logged in to see this" });
       return;
     }
     //here we know the token is valid
-    res.send(`Welcome ${decoded.email}`);
+    res.send({ message: `Welcome ${decoded.email}` });
   });
 });
 
