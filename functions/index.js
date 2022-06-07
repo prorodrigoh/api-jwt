@@ -5,9 +5,21 @@ import jwt from "jsonwebtoken";
 import secretkey from "./secret.js";
 
 const users = [
-  { id: 1, email: "admin@b.com", password: "abc123" },
-  { id: 2, email: "user1@b.com", password: "use123" },
-  { id: 3, email: "test1@b.com", password: "tst123" },
+  {
+    id: 1,
+    email: "admin@b.com", //abc123
+    password: "$2b$10$tDDW5Jmy/taXowERIwWHjO7RHJ/BqLyxegxMO27xHHkc.mjs0P0kO",
+  },
+  {
+    id: 2,
+    email: "user1@b.com", //use123
+    password: "$2b$10$tDDW5Jmy/taXowERIwWHjO3KEU8PFHotYfhFSGjSxsgrBxWSR2MzK",
+  },
+  {
+    id: 3,
+    email: "test1@b.com", //tst123
+    password: "$2b$10$tDDW5Jmy/taXowERIwWHjO7ce2AVqO8vnlXXLB1/mAt1DWwrq7EK6",
+  },
 ];
 
 const app = express();
